@@ -1,5 +1,6 @@
-public class main {
-    public static void main(string[] args) {
-        system.out.println("случайное число от 0 до 1: " + math.random());
+import java.lang.Math;
+public class Main {
+    public static void main(String[] args) {
+        System.out.println("случайное число от 0 до 1: " + Math.random());
     }
 }
