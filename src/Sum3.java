@@ -9,7 +9,7 @@ public class Sum3 {
         System.out.println(String.format("результат: %b", sum3(x, y, z)));
     }
     public static boolean sum3(int x, int y, int z){
-        return (x==y+z | y==x+z | z==x+y) ;
+        return (x==y+z || y==x+z || z==x+y) ;
     }
 }
 
