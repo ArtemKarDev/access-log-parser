@@ -9,7 +9,7 @@ public class Magic6 {
     }
     public static boolean magic6(int x, int y){
         if (x == 6 || y == 6) {return true;}
-        else return x + y == 6 || x - y == 6;
+        else return x + y == 6 || x - y == 6 || y - x == 6 ;
     }
 }
 
