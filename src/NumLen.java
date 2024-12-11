@@ -7,11 +7,13 @@ public class NumLen {
         System.out.printf("результат: %d", numLen(x));
     }
     public static int numLen(long x){
-        int i = 1;
-        for (; x>1; i++ ){
+        int res = 0;
+        do{
             x = x/10;
+            res += 1;
         }
-        return  i;
+        while(x>0);
+        return res;
     }
 }
 
