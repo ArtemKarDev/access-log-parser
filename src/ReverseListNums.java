@@ -1,14 +1,14 @@
 import java.util.Scanner;
 
-public class ListNums {
+public class ReverseListNums {
     public static void main(String[] args) {
         System.out.println("Введите число х: ");
         int x = new Scanner(System.in).nextInt();
-        System.out.println(String.format("результат: %s", listNums(x)));
+        System.out.println(String.format("результат: %s", reverseListNums(x)));
     }
-    public static String listNums(int x){
+    public static String reverseListNums(int x){
         String res ="";
-        for (int i=0; i<=x; i++ ){
+        for (int i=x; i>=0; i-- ){
             res += i + " ";
         }
         return  res;
