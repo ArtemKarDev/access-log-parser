@@ -8,7 +8,7 @@ public class EqualNum {
     }
     public static boolean equalNum(int x){
         boolean res = true;
-        while (x>10 && res == true){
+        while (x>10 && res){
            res = (x%10 == ((x/10)%10));
            x=x/10;
         }
