@@ -1,4 +1,3 @@
-import java.lang.Math;
 import java.util.Scanner;
 
 public class Main {
@@ -9,3 +8,5 @@ public class Main {
         System.out.println("Длина текста: " + text.length());
     }
 }
+
+
