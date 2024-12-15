@@ -9,15 +9,6 @@ public class Reverse {
         System.out.println("Response: "+ Arrays.toString(arr));
     }
 
-    public static int[] reverseBack(int[] arr){
-        int[] arrRev = new int[arr.length];
-        for (int i=0; i<arr.length; i++){
-            arrRev[i] = arr[arr.length- 1 - i];
-        }
-        return arrRev;
-    }
-
-
     public static void reverse(int[] arr){
         int temp;
         for (int i=0; i<arr.length/2; i++){
