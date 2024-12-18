@@ -20,5 +20,4 @@ public class Line {
         return "Линия от " + this.pStart + " до " + this.pEnd;
     }
 
-
 }
