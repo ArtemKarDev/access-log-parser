@@ -7,7 +7,7 @@ public class Line {
         this.pEnd = new Point(x2,y2);
     }
 
-    public Line(Point pStart,Point pEnd){
+    public Line(Point pStart, Point pEnd){
         this.pStart = pStart;
         this.pEnd = pEnd;
     }
