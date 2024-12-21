@@ -22,11 +22,12 @@ public class PolyLine {
         }
             {
         }
+
         return lines;
     }
 
     public Double getLength(){
-        Double sum = 0.0;
+        double sum = 0.0;
         for(int i=0; i<this.points.length-1; i++){
             sum += this.getLengthBetweenPoints(points[i],points[i+1]);
         }
