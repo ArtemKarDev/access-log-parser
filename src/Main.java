@@ -1,4 +1,5 @@
 import java.util.Arrays;
+import java.util.List;
 import java.util.SortedMap;
 
 public class Main {
@@ -29,10 +30,25 @@ public class Main {
 
 
         //City Kostroma = new City("Kastra",{new City.Path("Yarik",2)});
+        City Kostroma = new City("Kostroma");
+        City Yarik = new City("Yarik");
+        City Nerehta = new City("Nerehta");
+        Kostroma.addPath(Yarik,3);
+        Kostroma.addPath(Nerehta,1);
+        City.Path pathYarikNerehta = new City.Path(Nerehta,2);
+        City.Path pathNerehtaYarik = new City.Path(Yarik,2);
+        Yarik.addPath(pathYarikNerehta);
+        Nerehta.addPath(pathNerehtaYarik);
+        System.out.println(Kostroma);
+        System.out.println(Yarik);
+        System.out.println(Nerehta);
+
+        System.out.println("Путешествие: "+Kostroma.travelBy(2));
+
+//        Fraction fraction = new Fraction(3,5);
+//        System.out.println(fraction);
 
 
-        Fraction fraction = new Fraction(3,5);
-        System.out.println(fraction);
 
     }
 
