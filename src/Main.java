@@ -34,6 +34,8 @@ public class Main {
         Fraction fraction = new Fraction(3,5);
         System.out.println(fraction);
 
+
+
     }
 
 }

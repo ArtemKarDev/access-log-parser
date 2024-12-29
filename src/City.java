@@ -25,13 +25,13 @@ public class City {
     public City(String name){
         this.name = name;
     }
-    public City(String name, Path[] paths){
-        this.name = name;
-        this.paths = new Path[path];
-        for(int i = 0; i<paths.length; i++ ){
-            this.paths[i] = new Path(paths[i]);
-        }
-    }
+//    public City(String name, Path[] paths){
+//        this.name = name;
+//        this.paths = new Path[path];
+//        for(int i = 0; i<paths.length; i++ ){
+//            this.paths[i] = new Path(paths[i]);
+//        }
+//    }
 
     public String toString(){
         return "Город: " + this.name;
