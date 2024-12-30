@@ -1,6 +1,4 @@
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 
 public class City {
 
@@ -45,6 +43,7 @@ public class City {
         this.paths = Arrays.copyOf(this.paths,this.paths.length+1);
         this.paths[this.paths.length-1] = path;
     }
+
 
     public City travelBy(int n){
         City currentCity = this;

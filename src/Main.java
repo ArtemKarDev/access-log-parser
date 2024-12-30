@@ -5,50 +5,33 @@ import java.util.SortedMap;
 public class Main {
     public static void main(String[] args) {
 
-//        Point a1 = new Point(1,5);
-//        Point a2 = new Point(2,8);
-//        Point a3 = new Point(5,3);
-//        Point a4 = new Point(8,9);
-//
-//        Point[] listPoints = {a1,a2,a3,a4};
-//
-//        PolyLine pl1 = new PolyLine(listPoints);
-//        System.out.println(pl1);
-//        System.out.println("Длина ломаной линии: "+ pl1.getLength());
-//        System.out.println(Arrays.toString(pl1.getLines()));
-//
-//        Double sum = 0.0;
-//        Line[] lines = pl1.getLines();
-//        for (int i=0; i<lines.length; i++){
-//            sum+= lines[i].getLength();
-//        }
-//        System.out.println("Длина массива линий: "+ sum);
-//        a2.x = 12;
-//        System.out.println(a2);
-//        System.out.println(pl1);
-//        System.out.println(Arrays.toString(pl1.getLines()));
+        City cityA = new City("A");
+        City cityB = new City("B");
+        City cityC = new City("C");
+        City cityD = new City("D");
+        City cityE = new City("E");
+        City cityF = new City("F");
 
+        cityA.addPath(cityB,5);
+        cityA.addPath(cityD,6);
+        cityA.addPath(cityF,1);
 
-        //City Kostroma = new City("Kastra",{new City.Path("Yarik",2)});
-        City Kostroma = new City("Kostroma");
-        City Yarik = new City("Yarik");
-        City Nerehta = new City("Nerehta");
-        Kostroma.addPath(Yarik,3);
-        Kostroma.addPath(Nerehta,1);
-        City.Path pathYarikNerehta = new City.Path(Nerehta,2);
-        City.Path pathNerehtaYarik = new City.Path(Yarik,2);
-        Yarik.addPath(pathYarikNerehta);
-        Nerehta.addPath(pathNerehtaYarik);
-        System.out.println(Kostroma);
-        System.out.println(Yarik);
-        System.out.println(Nerehta);
+        cityB.addPath(cityA,5);
+        cityB.addPath(cityC,3);
 
-        System.out.println("Путешествие: "+Kostroma.travelBy(2));
+        cityC.addPath(cityB,3);
+        cityC.addPath(cityD,4);
 
-//        Fraction fraction = new Fraction(3,5);
-//        System.out.println(fraction);
+        cityD.addPath(cityA,6);
+        cityD.addPath(cityC,4);
+        cityD.addPath(cityE,2);
 
+        cityE.addPath(cityF,2);
 
+        cityF.addPath(cityB,1);
+        cityF.addPath(cityE,2);
+
+        System.out.println("Путешествие: "+cityB.travelBy(3));
 
     }
 
