@@ -4,7 +4,11 @@ public class Fraction {
 
     public Fraction(int numerator, int denominator){
         this.numerator = numerator;
-        this.denominator = denominator;
+        if (denominator<0) {
+            throw new IllegalArgumentException();
+        }
+        else {this.denominator = denominator;}
+
     }
 
     public Fraction sum(Fraction fraction2){
@@ -12,7 +16,19 @@ public class Fraction {
         return new Fraction( this.numerator*(commonDenominator/this.denominator) + fraction2.numerator*(commonDenominator/fraction2.denominator),commonDenominator);
     }
 
+    public Fraction sum(int x){
+        Fraction fraction2 = new Fraction(x,1);
+        int commonDenominator = leastCommonMultiple(this.denominator,fraction2.denominator);
+        return new Fraction( this.numerator*(commonDenominator/this.denominator) + fraction2.numerator*(commonDenominator/fraction2.denominator),commonDenominator);
+    }
+
     public Fraction minus(Fraction fraction2){
+        int commonDenominator = leastCommonMultiple(this.denominator,fraction2.denominator);
+        return new Fraction( this.numerator*(commonDenominator/this.denominator) - fraction2.numerator*(commonDenominator/fraction2.denominator),commonDenominator);
+    }
+
+    public Fraction minus(int x){
+        Fraction fraction2 = new Fraction(x,1);
         int commonDenominator = leastCommonMultiple(this.denominator,fraction2.denominator);
         return new Fraction( this.numerator*(commonDenominator/this.denominator) - fraction2.numerator*(commonDenominator/fraction2.denominator),commonDenominator);
     }
