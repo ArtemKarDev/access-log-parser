@@ -3,7 +3,7 @@ import java.util.List;
 
 public class Student {
 
-    private String name;
+    private final String name;
     private List<Integer> grades;
 
     public Student(String name) {
@@ -42,6 +42,7 @@ public class Student {
         }
         return this.grades;
     }
+
     public Student addGrades(int[] grades){
         this.grades = this.addGradesPrivate(grades);
         return this;
