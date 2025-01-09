@@ -5,7 +5,7 @@ public class Fraction {
     public Fraction(int numerator, int denominator){
         this.numerator = numerator;
         if (denominator<0) {
-            throw new IllegalArgumentException();
+            throw new IllegalArgumentException("Знаменатель не может быть меньше ноля");
         }
         else {this.denominator = denominator;}
 
@@ -44,7 +44,7 @@ public class Fraction {
         return a / gcdRecursionAlgorithm(a, b) * b;
     }
 
-
+    @Override
     public String toString(){
         return this.numerator+"/"+this.denominator;
     }
