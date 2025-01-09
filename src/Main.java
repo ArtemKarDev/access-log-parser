@@ -10,6 +10,7 @@ public class Main {
         anton.addGrades(new int[]{5,5,5}).addOneGrade(2);
         bony.setGrades(new int []{4,4,4}).addOneGrade(5).addGrades(new int [] {3,3,3});
         System.out.println(anton);
+        System.out.println(anton.getGrades());
         System.out.println(bony);
 
     }
