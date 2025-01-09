@@ -12,6 +12,7 @@ public class Main {
         System.out.println(anton);
         System.out.println(anton.getGrades());
         System.out.println(bony);
+        bony.addOneGrade(10);
 
     }
 }
