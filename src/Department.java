@@ -3,14 +3,16 @@ public class Department {
     public String department;
 
     public Department(String department){
-        this.department = department;
+        if (department.isEmpty() || department.equals(" ")){
+            throw new IllegalArgumentException("Укажите название отдела!");
+        }
+        else {this.department = department;}
     }
 
     public void setBoss(Employee employee){
-        if(employee.getDep() == this){
-            this.boss = employee;
-        }else {
-            System.out.println("Это сотрудник не из этого отдела!");
+        this.boss = employee;
+        if (employee.getDep() != this){
+            employee.setDep(this);
         }
     }
 
@@ -18,7 +20,11 @@ public class Department {
         return this.boss;
     }
 
+    @Override
     public String toString(){
+        if(this.getBoss() == null){
+            return "Департамент: "+ this.department+" без начальника!";
+        }
         return "Департамент: "+ this.department+" Начальник: "+this.boss.name;
     }
 }

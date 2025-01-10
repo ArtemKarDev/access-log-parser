@@ -1,14 +1,12 @@
 public class Employee {
     public String name;
-
     private Department dep;
 
-
     public Employee(String name, Department dep){
-        this.name = name;
+        if (name.isEmpty() || name.equals(" ")){ throw new IllegalArgumentException("Укажите имя сотрудника!");}
+        else {this.name = name;}
         this.dep = dep;
     }
-
     public Department getDep() {
         return dep;
     }
@@ -22,9 +20,12 @@ public class Employee {
         }
     }
 
-
+    @Override
     public String toString(){
         if(this == dep.getBoss()){return "Сотрудник "+ this.name + " начальник отдела " + dep.department;}
+        else if (this.dep.getBoss() == null) {
+            return "Сотрудник "+ this.name+" работает в отделе "+this.dep.department +", начальник которого не назначен!";
+        }
         return "Сотрудник "+ this.name+" работает в отделе "+this.dep.department +", начальник которого "+ this.dep.getBoss().name;
     }
 
