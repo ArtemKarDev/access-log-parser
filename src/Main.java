@@ -9,5 +9,10 @@ public class Main {
         System.out.println("compare a1 a2: "+(a1==a2));
         System.out.println("compare a2 a3: "+(a2==a3));
 
+        Point q1 = new Point3D(2,4,8);
+        System.out.println(q1);
+        Point3D q2 = new Point3D(4,2,1);
+
+
     }
 }
