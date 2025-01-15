@@ -4,7 +4,6 @@ public class Main {
         Department dep1 = new Department("ИТ");
         Department dep2 = new Department("Маркетинг");
 
-
         Employee emp1 = new Employee("Антон",dep1);
         dep1.setBoss(emp1);
         System.out.println("Вывод 1: "+ emp1);
@@ -22,7 +21,7 @@ public class Main {
 
         Department dep4 = new Department("*");
         System.out.println("Вывод 5: "+dep4);
-        Employee emp4 = new Employee(" ",dep4);
+        Employee emp4 = new Employee("     ",dep4);
 
 
     }

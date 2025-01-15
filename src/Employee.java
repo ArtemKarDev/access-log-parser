@@ -31,7 +31,7 @@ public class Employee {
         else if (this.dep.getBoss() == null) {
             return "Сотрудник "+ this.name+" работает в отделе "+this.dep.getDepName() +", начальник которого не назначен!";
         }
-        return "Сотрудник "+ this.name+" работает в отделе "+this.dep.getDepName() +", начальник которого "+ this.dep.getBoss().name;
+        return "Сотрудник "+ this.name+" работает в отделе "+this.dep.getDepName() +", начальник которого "+ this.dep.getBossName();
     }
 
 }
