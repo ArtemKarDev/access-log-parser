@@ -2,17 +2,14 @@ import java.util.Arrays;
 
 public class PolyLine {
 
-    private Point[] points;
+    Point[] points;
 
     public PolyLine(){
         this.points = new Point[0];
     }
 
     public PolyLine(Point[] points){
-        this.points = new Point[points.length];
-        for (int i=0; i<points.length; i++){
-            this.points[i] = points[i];
-        }
+        this.points = points;
     }
 
     public Line[]  getLines(){
@@ -20,9 +17,6 @@ public class PolyLine {
         for(int i=0; i<this.points.length-1; i++){
             lines[i] = new Line(this.points[i],this.points[i+1]);
         }
-            {
-        }
-
         return lines;
     }
 
@@ -42,4 +36,18 @@ public class PolyLine {
         return "Линия: " + Arrays.toString(points);
     }
 
+}
+
+class ClosedPolyLine extends PolyLine{
+
+    public ClosedPolyLine(Point[] points){
+        super(points);
+    }
+
+    @Override
+    public Double getLength() {
+        Point[] lastFirstPoints = {super.points[this.points.length-1],this.points[0]};
+        PolyLine temp = new PolyLine(lastFirstPoints);
+        return super.getLength() + temp.getLength();
+    }
 }

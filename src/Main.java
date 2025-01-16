@@ -22,10 +22,16 @@ public class Main {
             sum+= lines[i].getLength();
         }
         System.out.println("Длина массива линий: "+ sum);
-        a2.x = 12;
-        System.out.println(a2);
-        System.out.println(pl1);
-        System.out.println(Arrays.toString(pl1.getLines()));
+//        a2.x = 12;
+//        System.out.println(a2);
+//        System.out.println(pl1);
+//        System.out.println(Arrays.toString(pl1.getLines()));
+
+        PolyLine cpl1 = new ClosedPolyLine(listPoints);
+        System.out.println("Замнкнутая ломаная линия: "+cpl1);
+        System.out.println("Длина замнкнутой ломаной линии: "+cpl1.getLength());
+
+
 
     }
 
