@@ -1,7 +1,4 @@
-import java.time.Duration;
 import java.util.Arrays;
-import java.util.Objects;
-import java.util.SortedMap;
 
 public class Main {
 
@@ -19,16 +16,12 @@ public class Main {
         System.out.println("Длина ломаной линии: "+ pl1.getLength());
         System.out.println(Arrays.toString(pl1.getLines()));
 
-        Double sum = 0.0;
+        double sum = 0.0;
         Line[] lines = pl1.getLines();
         for (int i=0; i<lines.length; i++){
             sum+= lines[i].getLength();
         }
         System.out.println("Длина массива линий: "+ sum);
-//        a2.x = 12;
-//        System.out.println(a2);
-//        System.out.println(pl1);
-//        System.out.println(Arrays.toString(pl1.getLines()));
 
         PolyLine cpl1 = new ClosedPolyLine(listPoints);
         System.out.println("Замнкнутая ломаная линия: "+cpl1);
@@ -36,7 +29,6 @@ public class Main {
 
         System.out.println(length(pl1));
         System.out.println(length(cpl1));
-
 
     }
 
