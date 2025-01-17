@@ -1,7 +1,10 @@
+import java.time.Duration;
 import java.util.Arrays;
+import java.util.Objects;
 import java.util.SortedMap;
 
 public class Main {
+
     public static void main(String[] args) {
 
         Point a1 = new Point(1,5);
@@ -31,8 +34,18 @@ public class Main {
         System.out.println("Замнкнутая ломаная линия: "+cpl1);
         System.out.println("Длина замнкнутой ломаной линии: "+cpl1.getLength());
 
+        System.out.println(length(pl1));
+        System.out.println(length(cpl1));
 
 
+    }
+
+    public static double length(Measurable arg){
+        return arg.getLength();
+    }
+
+    public interface Measurable {
+        double getLength();
     }
 
 }

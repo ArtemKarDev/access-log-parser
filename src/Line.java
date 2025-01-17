@@ -1,4 +1,4 @@
-public class Line {
+public class Line implements Main.Measurable{
 
     Point pStart, pEnd;
 
@@ -12,7 +12,7 @@ public class Line {
         this.pEnd = pEnd;
     }
 
-    public Double getLength(){
+    public double getLength(){
         return (Math.sqrt ((this.pEnd.x - this.pStart.x)*(this.pEnd.x - this.pStart.x) + (this.pEnd.y - this.pStart.y)*(this.pEnd.y - this.pStart.y)));
     }
 

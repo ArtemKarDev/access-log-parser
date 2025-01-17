@@ -1,6 +1,6 @@
 import java.util.Arrays;
 
-public class PolyLine {
+public class PolyLine implements Main.Measurable {
 
     Point[] points;
 
@@ -8,7 +8,7 @@ public class PolyLine {
         this.points = new Point[0];
     }
 
-    public PolyLine(Point[] points){
+    public PolyLine(Point ... points){
         this.points = points;
     }
 
@@ -20,8 +20,8 @@ public class PolyLine {
         return lines;
     }
 
-    public Double getLength(){
-        double sum = 0.0;
+    public double getLength(){
+        double sum = 0;
         for(int i=0; i<this.points.length-1; i++){
             sum += this.getLengthBetweenPoints(points[i],points[i+1]);
         }
@@ -40,12 +40,12 @@ public class PolyLine {
 
 class ClosedPolyLine extends PolyLine{
 
-    public ClosedPolyLine(Point[] points){
+    public ClosedPolyLine(Point ... points){
         super(points);
     }
 
     @Override
-    public Double getLength() {
+    public double getLength() {
         Point[] lastFirstPoints = {super.points[this.points.length-1],this.points[0]};
         PolyLine temp = new PolyLine(lastFirstPoints);
         return super.getLength() + temp.getLength();
