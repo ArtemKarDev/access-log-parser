@@ -30,6 +30,9 @@ public class Main {
         System.out.println(length(pl1));
         System.out.println(length(cpl1));
 
+        MyString myString = new MyString("Abra Cadabra");
+        System.out.println(length(myString));
+
     }
 
     public static double length(Measurable arg){
