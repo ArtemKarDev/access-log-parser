@@ -1,36 +1,19 @@
+
+
 public class Main {
     public static void main(String[] args) {
+        Point point1 = new Point(5,5);
 
-        Bird chijik = new Sparrow();
-        System.out.print(chijik.getSpecies()+" ");
-        chijik.sing();
+        Circle circle1 = new Circle(point1,3);
+        System.out.println(circle1.getArea());
 
-        Bird cocoshka = new Cuckoo();
-        System.out.print(cocoshka.getSpecies()+" ");
-        cocoshka.sing();
+        Square square = new Square(point1, 3);
+        System.out.println(square.getArea());
 
-        Bird popugai = new Parrot("Пусть всегда будет солнце!");
-        System.out.print(popugai.getSpecies()+" ");
-        popugai.sing();
-
-        birdsMarket(new Sparrow(), new Cuckoo(), new Sparrow(),
-                new Parrot("Пусть всегда будет солнце!"),
-                new Cuckoo(), new Sparrow(),
-                new Parrot("Пусть всегда будет солнце!"));
+        Rectangle rectangle = new Rectangle(point1,3,4);
+        System.out.println(rectangle.getArea());
     }
 
-public static void birdsMarket(Bird... birds){
-        for(Bird bird: birds){
-            bird.sing();
-        }
-}
 
-public static void birdMarket(Singable object){
-        object.sing();
-}
-
-interface Singable{
-    void sing();
-}
 
 }
