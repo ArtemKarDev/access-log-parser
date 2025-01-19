@@ -8,6 +8,11 @@ public class Main {
         System.out.println(f1.sum(3).minus(2));
 
 
-        Fraction f4 = new Fraction(7,-4);
+        //Fraction f4 = new Fraction(7,-4);
+        System.out.println(f1.intValue());
+        System.out.println(f1.doubleValue());
+        System.out.println(f1.longValue());
+        System.out.println(f1.floatValue());
+
     }
 }
