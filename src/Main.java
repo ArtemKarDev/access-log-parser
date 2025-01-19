@@ -12,8 +12,20 @@ public class Main {
 
         Rectangle rectangle = new Rectangle(point1,3,4);
         System.out.println(rectangle.getArea());
+
+        System.out.println(sumAllAreas(circle1,square,rectangle));
     }
 
+    public static double sumAllAreas(Areable... objects){
+        double result = 0;
+        for(Areable item: objects){
+            result += item.getArea();
+        }
+        return result;
+}
 
+    public interface Areable{
+        double getArea();
+    }
 
 }
