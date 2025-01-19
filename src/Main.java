@@ -1,29 +1,38 @@
+import java.util.Objects;
+
 public class Main {
     public static void main(String[] args) {
 
-        Fraction f1 = new Fraction(1,3);
-        Fraction f2 = new Fraction(2,5);
-        Fraction f3 = new Fraction(7,8);
-        System.out.println(f1+ " + " + f2 + " + " + f3 + " - 5" + " = "+ f1.sum(f2).sum(f3).minus(5));
-        System.out.println(f1.sum(3).minus(2));
+        Bird chijik = new Sparrow();
+        System.out.print(chijik.getSpecies()+" ");
+        chijik.sing();
 
-        //Fraction f4 = new Fraction(7,-4);
-        System.out.println(f1.intValue());
-        System.out.println(f1.doubleValue());
-        System.out.println(f1.longValue());
-        System.out.println(f1.floatValue());
+        Bird cocoshka = new Cuckoo();
+        System.out.print(cocoshka.getSpecies()+" ");
+        cocoshka.sing();
 
-        System.out.println(sum(2,new Fraction(3,5), 2.3));
-        System.out.println(sum(3.6,new Fraction(49,12), 3, new Fraction(3,2)));
-        System.out.println(sum(new Fraction(1,3), 1));
+        Bird popugai = new Parrot("Пусть всегда будет солнце!");
+        System.out.print(popugai.getSpecies()+" ");
+        popugai.sing();
 
+        birdsMarket(new Sparrow(), new Cuckoo(), new Sparrow(),
+                new Parrot("Пусть всегда будет солнце!"),
+                new Cuckoo(), new Sparrow(),
+                new Parrot("Пусть всегда будет солнце!"));
     }
 
-    public static double sum(Number... numbers){
-        double sum = 0;
-        for (Number number: numbers){
-            sum += number.doubleValue();
+public static void birdsMarket(Bird... birds){
+        for(Bird bird: birds){
+            bird.sing();
         }
-        return sum;
-    }
+}
+
+public static void birdMarket(Singable object){
+        object.sing();
+}
+
+interface Singable{
+    void sing();
+}
+
 }
