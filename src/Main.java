@@ -1,32 +1,37 @@
-
+import ru.stepup.karlashov.Student;
+import ru.stepup.karlashov.animal.Bird;
+import ru.stepup.karlashov.animal.Singable;
+import ru.stepup.karlashov.geometry.Areable;
+import ru.stepup.karlashov.geometry.Measurable;
 
 public class Main {
     public static void main(String[] args) {
 
-        Student anton = new Student("Антон",new int[] {2,3,4,5});
-        System.out.println(anton);
-        Student bony = new Student("Боня");
-        System.out.println(bony);
-        bony.setGrades(new int[]{5,4,3,2});
-        System.out.println(bony);
-        anton.addGrades(new int[]{5,5,5}).addOneGrade(2);
-        bony.setGrades(new int []{4,4,4}).addOneGrade(5).addGrades(new int [] {3,3,3});
-        System.out.println(anton);
-        System.out.println(anton.getGrades());
-        System.out.println(bony);
-        bony.addOneGrade(10);
 
-        }
+    }
+
     public static double sumAllAreas(Areable... objects){
         double result = 0;
-        for(Areable item: objects){
+        for (Areable item : objects) {
             result += item.getArea();
         }
         return result;
-}
+    }
 
-    public interface Areable{
-        double getArea();
+
+    public static double length(Measurable arg){
+        return arg.getLength();
+    }
+
+
+    public static void birdsMarket(Bird... birds){
+        for(Bird bird: birds){
+            bird.sing();
+        }
+    }
+
+    public static void birdMarket(Singable object){
+        object.sing();
     }
 
 

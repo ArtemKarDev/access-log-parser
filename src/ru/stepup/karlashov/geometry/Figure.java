@@ -1,4 +1,5 @@
-public abstract class Figure implements Main.Areable {
+package ru.stepup.karlashov.geometry;
+public abstract class Figure implements Areable {
     public abstract double getArea();
 }
 

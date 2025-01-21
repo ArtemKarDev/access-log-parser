@@ -1,3 +1,4 @@
+package ru.stepup.karlashov.geometry;
 public class Point {
     int x,y;
 
