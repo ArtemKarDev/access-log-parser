@@ -1,14 +1,10 @@
-import ru.stepup.karlashov.Student;
 import ru.stepup.karlashov.animal.Bird;
 import ru.stepup.karlashov.animal.Singable;
 import ru.stepup.karlashov.geometry.Areable;
 import ru.stepup.karlashov.geometry.Measurable;
 
 public class Main {
-    public static void main(String[] args) {
 
-
-    }
 
     public static double sumAllAreas(Areable... objects){
         double result = 0;
