@@ -5,16 +5,22 @@ import ru.stepup.karlashov.animal.Singable;
 import ru.stepup.karlashov.geometry.Areable;
 import ru.stepup.karlashov.geometry.Measurable;
 import ru.stepup.karlashov.geometry.Point;
+import ru.stepup.karlashov.matematika.Fraction;
 
 
 import static java.lang.Math.pow;
 import static java.lang.Integer.parseInt;
 public class Main {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws CloneNotSupportedException {
 
-        Point p1 = new Point(2,2);
-        java.awt.Point p2 = new java.awt.Point(5,5);
-        System.out.println(p1 + "     " + p2);
+        Fraction f1 = new Fraction(1,5);
+        Fraction f2 =  f1.clone();
+        System.out.println(f1 + "     " +f2);
+        System.out.println(f1.equals(f2) + " "+ f2.equals(f1));
+        f1 = f1.sum(1);
+        System.out.println(f1 + "     " +f2);
+        System.out.println(f1.equals(f2) + " "+ f2.equals(f1));
+        System.out.println(f1.hashCode()+ " " + f2.hashCode());
 
     }
 
