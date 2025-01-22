@@ -15,13 +15,12 @@ public class Student {
 
     public Student(String name, int[] grades){
         this(name);
-        this.grades = this.addGradesPrivate(grades);
+        this.grades = new ArrayList<>(this.addGradesPrivate(grades));
     }
 
-    public Student setGrades(int[] grades) {
+    public void setGrades(int[] grades) {
         this.grades = new ArrayList<>();
         this.addGradesPrivate(grades);
-        return this;
     }
 
     private List<Integer> addOneGradePrivate(int grade){
@@ -33,10 +32,10 @@ public class Student {
         return this.grades;
     }
 
-    public Student addOneGrade(int grade){
-        this.grades = addOneGradePrivate(grade);
-        return this;
-    }
+//    public Student addOneGrade(int grade){
+//        this.grades = addOneGradePrivate(grade);
+//        return this;
+//    }
 
     private List<Integer> addGradesPrivate(int[] grades){
         for(int item : grades) {
@@ -45,13 +44,13 @@ public class Student {
         return this.grades;
     }
 
-    public Student addGrades(int[] grades){
-        this.grades = this.addGradesPrivate(grades);
-        return this;
-    }
+//    public Student addGrades(int[] grades){
+//        this.grades = new ArrayList<>(this.addGradesPrivate(grades));
+//        return this;
+//    }
 
     public List<Integer> getGrades(){
-        return this.grades;
+        return new ArrayList<>(this.grades);
     }
     @Override
     public String toString(){

@@ -6,6 +6,7 @@ import ru.stepup.karlashov.geometry.Areable;
 import ru.stepup.karlashov.geometry.Measurable;
 import ru.stepup.karlashov.geometry.Point;
 
+import java.util.List;
 import java.util.Scanner;
 
 import static java.lang.Math.pow;
@@ -16,6 +17,7 @@ public class Main {
         Point p1 = new Point(2,2);
         java.awt.Point p2 = new java.awt.Point(5,5);
         System.out.println(p1 + "     " + p2);
+
     }
 
     protected static int myPow(String x, String y){
