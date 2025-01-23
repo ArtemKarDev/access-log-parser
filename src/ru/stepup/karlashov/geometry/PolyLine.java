@@ -2,7 +2,7 @@ package ru.stepup.karlashov.geometry;
 import java.util.Arrays;
 import java.util.Objects;
 
-public class PolyLine implements Measurable, Cloneable {
+public class PolyLine implements Measurable {
 
     Point[] points;
 
