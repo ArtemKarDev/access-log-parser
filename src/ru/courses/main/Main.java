@@ -5,7 +5,7 @@ import ru.stepup.karlashov.animal.Singable;
 import ru.stepup.karlashov.geometry.Areable;
 import ru.stepup.karlashov.geometry.Measurable;
 import ru.stepup.karlashov.geometry.Point;
-import ru.stepup.karlashov.matematika.Fraction;
+
 
 
 import static java.lang.Math.pow;
@@ -13,14 +13,15 @@ import static java.lang.Integer.parseInt;
 public class Main {
     public static void main(String[] args) throws CloneNotSupportedException {
 
-        Fraction f1 = new Fraction(1,5);
-        Fraction f2 =  f1.clone();
-        System.out.println(f1 + "     " +f2);
-        System.out.println(f1.equals(f2) + " "+ f2.equals(f1));
-        f1 = f1.sum(1);
-        System.out.println(f1 + "     " +f2);
-        System.out.println(f1.equals(f2) + " "+ f2.equals(f1));
-        System.out.println(f1.hashCode()+ " " + f2.hashCode());
+        Point p1 = new Point(1,5);
+        Point p2 =  p1.clone();
+        System.out.println(p1 + "     " +p2);
+        System.out.println(p1.equals(p2) + " "+ p2.equals(p1));
+        p1.setX(4);
+        System.out.println(p1 + "     " +p2);
+        System.out.println(p1.equals(p2) + " "+ p2.equals(p1));
+        System.out.println(p1.equals(p2));
+        System.out.println(p1.hashCode()+ " " + p2.hashCode());
 
     }
 
