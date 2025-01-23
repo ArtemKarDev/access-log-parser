@@ -1,7 +1,8 @@
 package ru.stepup.karlashov.geometry;
 import java.util.Arrays;
+import java.util.Objects;
 
-public class PolyLine implements Measurable {
+public class PolyLine implements Measurable, Cloneable {
 
     Point[] points;
 
@@ -36,6 +37,30 @@ public class PolyLine implements Measurable {
     public String toString(){
         return "Линия: " + Arrays.toString(points);
     }
+
+
+
+    @Override
+    public int hashCode(){
+        final int prime = 31;
+        int hash = 2;
+        hash = prime * hash + Objects.hashCode(this.points);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj){
+        if (obj == this) return true;
+        if (obj == null || obj.getClass() != this.getClass()) return false;
+        PolyLine other = (PolyLine) obj;
+        for(int i=0; i< this.points.length; i++){
+            if (points[i].x != other.points[i].x || points[i].y != other.points[i].y) {
+                return false;
+            }
+        }
+        return true;
+    }
+
 
 }
 
