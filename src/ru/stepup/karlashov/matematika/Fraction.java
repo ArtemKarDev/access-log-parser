@@ -1,6 +1,5 @@
 package ru.stepup.karlashov.matematika;
 
-
 import java.util.Objects;
 
 public class Fraction extends Number implements  Cloneable{
@@ -86,19 +85,18 @@ public class Fraction extends Number implements  Cloneable{
 
     @Override
     public boolean equals(Object obj){
-        if (obj == this){
-            return true;
-        }
-        if (obj == null || obj.getClass() != this.getClass()){
-            return false;
-        }
-        final Fraction other = (Fraction) obj;
+        if (obj == this)   return true;
+        if (obj == null || obj.getClass() != this.getClass()) return false;
+        Fraction other = (Fraction) obj;
         return this.num == other.num && this.denom == other.denom;
     }
 
     @Override
     public Fraction clone() throws CloneNotSupportedException {
-        return (Fraction) super.clone();
+        Fraction tmp = (Fraction) super.clone();
+        tmp.num = this.num;
+        tmp.denom = this.denom;
+        return tmp;
     }
 
 }
