@@ -1,5 +1,13 @@
 package ru.stepup.karlashov.geometry;
 public abstract class Figure implements Areable {
+
+    public static double sumAllAreas(Areable... objects){
+        double result = 0;
+        for (Areable item : objects) {
+            result += item.getArea();
+        }
+        return result;
+    }
     public abstract double getArea();
 }
 

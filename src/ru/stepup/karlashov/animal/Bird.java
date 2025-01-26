@@ -10,6 +10,17 @@ public abstract class Bird implements Singable {
 
     public abstract void sing();
 
+
+    public static void birdsMarket(Bird... birds){
+        for(Bird bird: birds){
+            bird.sing();
+        }
+    }
+
+    public static void birdMarket(Singable object){
+        object.sing();
+    }
+
 }
 
 

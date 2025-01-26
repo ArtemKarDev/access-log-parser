@@ -4,6 +4,10 @@ import java.util.Objects;
 
 public class Line implements Measurable , Cloneable{
 
+    public static double length(Measurable arg){
+        return arg.getLength();
+    }
+
     Point pStart, pEnd;
 
     public Line(int x1, int y1, int x2, int y2){
