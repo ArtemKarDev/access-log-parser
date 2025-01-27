@@ -53,6 +53,7 @@ public class PolyLine implements Measurable {
         if (obj == this) return true;
         if (obj == null || obj.getClass() != this.getClass()) return false;
         PolyLine other = (PolyLine) obj;
+        if ( other.points.length != this.points.length) return false;
         for(int i=0; i< this.points.length; i++){
             if (points[i].x != other.points[i].x || points[i].y != other.points[i].y) {
                 return false;
