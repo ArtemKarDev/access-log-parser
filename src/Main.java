@@ -25,29 +25,43 @@ public class Main {
 
     public static String getInfo(String path) throws IOException,LargeLenLineException {
         int countLines = 0;
-        String line;
+        // String line;
         int yandexBotCount = 0;
         int googleBotCount = 0;
 
         FileReader fileReader = new FileReader(path);
-        BufferedReader reader = new BufferedReader(fileReader);
+        BufferedReader reader;
 
-        while ((line = reader.readLine()) != null) {
-            countLines += 1;
-            if (line.length() > 1024){
-                throw new LargeLenLineException("Строка "+ countLines +" превышает 1024 символов!");
-            }
-            try{
-                LogEntry entry = LogEntry.parse(line);
-                entry.getUserAgentName();
-                switch (entry.getUserAgentName().toLowerCase()){
-                    case "yandexbot" : yandexBotCount += 1; break;
-                    case "googlebot" : googleBotCount += 1; break;
+        try{
+            reader = new BufferedReader(fileReader);
+            String line = reader.readLine();
+            while (line != null) {
+
+                if (line.length() > 1024){
+                    throw new LargeLenLineException("Строка "+ countLines +" превышает 1024 символов!");
                 }
-            } catch (Exception ex){
-                //System.out.println(ex.getMessage());
+                try {
+                    LogEntry entry = LogEntry.parse(line);
+                    entry.getUserAgentName();
+                    switch (entry.getUserAgentName().toLowerCase()) {
+                        case "yandexbot":
+                            yandexBotCount += 1;
+                            break;
+                        case "googlebot":
+                            googleBotCount += 1;
+                            break;
+                    }
+                } catch (Exception ex){
+                    //System.out.println(ex.getMessage());
+                }
+                countLines += 1;
+                line = reader.readLine();
             }
+            reader.close();
+        } catch (Exception ex) {
+            System.out.println(ex.getMessage());
         }
+
         return "Количество строк: " + countLines + ". yandexbot " + yandexBotCount+ ". googlebot: " +googleBotCount;
     }
 
