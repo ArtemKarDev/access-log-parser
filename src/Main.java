@@ -25,30 +25,30 @@ public class Main {
 
     public static String getInfo(String path) throws IOException,LargeLenLineException {
         int countLines = 0;
-        int maxLenLine = 0;
-        int minLenLine = 0;
-        int currentLenLine = 0;
         String line;
+        int yandexBotCount = 0;
+        int googleBotCount = 0;
 
         FileReader fileReader = new FileReader(path);
         BufferedReader reader = new BufferedReader(fileReader);
 
-        if ((line = reader.readLine()) != null) {
-            currentLenLine = line.length();
-            maxLenLine = currentLenLine;
-            minLenLine = currentLenLine;
-            countLines += 1;
-        }
         while ((line = reader.readLine()) != null) {
             countLines += 1;
-            currentLenLine = line.length();
-            if (currentLenLine > 1024){
+            if (line.length() > 1024){
                 throw new LargeLenLineException("Строка "+ countLines +" превышает 1024 символов!");
             }
-            if (currentLenLine > maxLenLine){maxLenLine = currentLenLine;}
-            if (currentLenLine < minLenLine){minLenLine = currentLenLine;}
+            try{
+                LogEntry entry = LogEntry.parse(line);
+                entry.getUserAgentName();
+                switch (entry.getUserAgentName().toLowerCase()){
+                    case "yandexbot" : yandexBotCount += 1; break;
+                    case "googlebot" : googleBotCount += 1; break;
+                }
+            } catch (Exception ex){
+                //System.out.println(ex.getMessage());
+            }
         }
-        return "Количество строк: " + countLines + ". Максимальная строка: " + maxLenLine+ ". Минимальная строка: " +minLenLine;
+        return "Количество строк: " + countLines + ". yandexbot " + yandexBotCount+ ". googlebot: " +googleBotCount;
     }
 
 
