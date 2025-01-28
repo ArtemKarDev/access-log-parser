@@ -32,13 +32,13 @@ public class Main {
         FileReader fileReader = new FileReader(path);
         BufferedReader reader;
 
-        try{
+        try {
             reader = new BufferedReader(fileReader);
             String line = reader.readLine();
             while (line != null) {
 
-                if (line.length() > 1024){
-                    throw new LargeLenLineException("Строка "+ countLines +" превышает 1024 символов!");
+                if (line.length() > 1024) {
+                    throw new LargeLenLineException("Строка " + countLines + " превышает 1024 символов!");
                 }
                 try {
                     LogEntry entry = LogEntry.parse(line);
@@ -51,7 +51,7 @@ public class Main {
                             googleBotCount += 1;
                             break;
                     }
-                } catch (Exception ex){
+                } catch (Exception ex) {
                     //System.out.println(ex.getMessage());
                 }
                 countLines += 1;
@@ -61,10 +61,16 @@ public class Main {
         } catch (Exception ex) {
             System.out.println(ex.getMessage());
         }
-
-        return "Количество строк: " + countLines + ". yandexbot " + yandexBotCount+ ". googlebot: " +googleBotCount;
+        double precentYandexBot = 0;
+        double precentGooglebot = 0;
+        if (countLines > 0) {
+            precentYandexBot = getPrecentage(yandexBotCount, countLines);
+            precentGooglebot = getPrecentage(googleBotCount, countLines);
+        }
+        return "Количество строк: " + countLines + ". Доля запросов yandexbot: " + precentYandexBot + "%. Доля запросов googlebot: " + precentGooglebot+ "%";
     }
-
-
+    public static double getPrecentage(int score, int total){
+        return (double) (score * 100/ total);
+    }
 
 }
