@@ -22,7 +22,6 @@ public class Main {
 
     }
 
-
     public static String getInfo(String path) throws IOException,LargeLenLineException {
         int countLines = 0;
         // String line;
@@ -41,9 +40,8 @@ public class Main {
                     throw new LargeLenLineException("Строка " + countLines + " превышает 1024 символов!");
                 }
                 try {
-                    LogEntry entry = LogEntry.parse(line);
-                    entry.getUserAgentName();
-                    switch (entry.getUserAgentName().toLowerCase()) {
+                    LogEntry entry = new LogEntry(line);
+                    switch (entry.getUserAgent().getName().toLowerCase()) {
                         case "yandexbot":
                             yandexBotCount += 1;
                             break;
@@ -52,7 +50,7 @@ public class Main {
                             break;
                     }
                 } catch (Exception ex) {
-                    //System.out.println(ex.getMessage());
+                    System.out.println(ex.getMessage());
                 }
                 countLines += 1;
                 line = reader.readLine();
