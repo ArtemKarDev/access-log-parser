@@ -2,13 +2,13 @@ import java.io.*;
 import java.util.Scanner;
 
 public class Main {
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws IOException, Exception {
 
         System.out.println("Введите путь к файлу и нажмите <Enter>: ");
-        // C:\aqa_inno\AccessLogParser\access.log
+        // C:\aqa_inno\AccessLogParser\access.log C:\aqa_inno\AccessLogParser\5.log
         String path = new Scanner(System.in).nextLine();
         File file = new File(path);
-        boolean fileExists  = file.exists();
+        boolean fileExists = file.exists();
         boolean isDirectory = file.isDirectory();
 
         if (isDirectory) {
@@ -17,58 +17,39 @@ public class Main {
             System.out.println("Указан несуществующий файл в папке!");
         } else {
             System.out.println("Путь указан верно.");
-            System.out.println(getInfo(path));
+            getInfo(path);
         }
-
     }
 
-    public static String getInfo(String path) throws IOException,LargeLenLineException {
+    public static void getInfo(String path) throws IOException, LargeLenLineException {
         int countLines = 0;
-        // String line;
-        int yandexBotCount = 0;
-        int googleBotCount = 0;
-
         FileReader fileReader = new FileReader(path);
         BufferedReader reader;
-
+        Statistics stat = new Statistics();
         try {
             reader = new BufferedReader(fileReader);
             String line = reader.readLine();
             while (line != null) {
-
                 if (line.length() > 1024) {
                     throw new LargeLenLineException("Строка " + countLines + " превышает 1024 символов!");
                 }
                 try {
                     LogEntry entry = new LogEntry(line);
-                    switch (entry.getUserAgent().getName().toLowerCase()) {
-                        case "yandexbot":
-                            yandexBotCount += 1;
-                            break;
-                        case "googlebot":
-                            googleBotCount += 1;
-                            break;
-                    }
+                    System.out.println(entry.getUserAgent());
+                    //stat.addEntry(entry);
                 } catch (Exception ex) {
-                    System.out.println(ex.getMessage());
+                    //System.out.println(ex.getMessage());
                 }
                 countLines += 1;
                 line = reader.readLine();
+
             }
             reader.close();
         } catch (Exception ex) {
             System.out.println(ex.getMessage());
         }
-        double precentYandexBot = 0;
-        double precentGooglebot = 0;
-        if (countLines > 0) {
-            precentYandexBot = getPrecentage(yandexBotCount, countLines);
-            precentGooglebot = getPrecentage(googleBotCount, countLines);
-        }
-        return "Количество строк: " + countLines + ". Доля запросов yandexbot: " + precentYandexBot + "%. Доля запросов googlebot: " + precentGooglebot+ "%";
+        System.out.println(stat);
     }
-    public static double getPrecentage(int score, int total){
-        return (double) (score * 100/ total);
-    }
+
 
 }
