@@ -7,8 +7,6 @@ public class Statistics {
     static LocalDateTime minTime;
     static LocalDateTime maxTime;
     static long countRequests;
-//    int yandexBotCount = 0;
-//    int googleBotCount = 0;
 
     public Statistics(){
     }
@@ -24,16 +22,6 @@ public class Statistics {
             maxTime = currentTime;
         }
 
-
-//        switch (logEntry.getUserAgent().getName().toLowerCase()) {
-//            case "yandexbot":
-//                yandexBotCount += 1;
-//                break;
-//            case "googlebot":
-//                googleBotCount += 1;
-//                break;
-//        }
-//
     }
 
     private LocalDateTime getMinTime(){
@@ -49,6 +37,7 @@ public class Statistics {
         return countRequests;
     }
     public double getTrafficRateByte(){
+        if (this.getMinTime() == null){return 0;}
         Duration duration = Duration.between(this.getMinTime(),this.getMaxTime());
         long durationInHours = duration.toHours();
         if (durationInHours==0){durationInHours=1;}

@@ -36,7 +36,7 @@ public class Main {
                 try {
                     LogEntry entry = new LogEntry(line);
                     System.out.println(entry.getUserAgent());
-                    //stat.addEntry(entry);
+                    stat.addEntry(entry);
                 } catch (Exception ex) {
                     //System.out.println(ex.getMessage());
                 }
