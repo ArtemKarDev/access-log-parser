@@ -17,6 +17,7 @@ public class LogEntry {
     private final UserAgent userAgent; //— информация о браузере или клиенте.
 
 
+
     public LogEntry(String logLine) throws Exception {
 
         String logEntryPattern = "^([\\d.]+) (\\S+) (\\S+) \\[([\\w:/]+\\s[+\\-]\\d{4})\\] \"(.+?)\" (\\d{3}) (\\d+) \"([^\"]+)\" \"([^\"]+)\"";
@@ -43,7 +44,6 @@ public class LogEntry {
         } else {
             this.userAgent = new UserAgent("none", "none");
         }
-
     }
 
     public String getIpAddress() {
@@ -77,7 +77,6 @@ public class LogEntry {
     public UserAgent getUserAgent() {
         return userAgent;
     }
-
 
     @Override
     public String toString() {
@@ -121,7 +120,6 @@ public class LogEntry {
         public String toString() {
             return String.format("UserAgent name: %s, type: %s, bot: %s", browserName, osType, botName);
         }
-
     }
 
     public UserAgent parseUserAgent(String userAgentString) {
@@ -143,21 +141,41 @@ public class LogEntry {
 
     private static String extractBotName(String userAgentString) {
         String botName = "unknown";
-        List<String> substringsInBrackets = new ArrayList<>();
-        Pattern pattern = Pattern.compile("\\(([^)]+)\\)");//Pattern для поиска подстрок в скобках
-        Matcher matcher = pattern.matcher(userAgentString);
-        while (matcher.find()) {
-            substringsInBrackets.add(matcher.group(1));
-        }
-        for (String substring : substringsInBrackets) {
-            if (substring.toLowerCase().contains("compatible")) {
-                String[] parts = substring.split(";");
-                if (parts.length >= 2) {
-                    String fragment = parts[1].replace(" ", "");
+        String[] substrings = userAgentString.split(";");
+        for (int i = 0; i<substrings.length-1; i++){
+            if (substrings[i].contains("compatible") && i<substrings.length-1){
+                String fragment = substrings[i+1].strip();//.replace(" ", "");
+                if (fragment.contains("/")) {
                     botName = fragment.substring(0, fragment.indexOf("/"));
-                }
+                } else {botName = fragment;}
             }
         }
+
+
+
+
+
+//        List<String> substringsInBrackets = new ArrayList<>();
+//        Pattern pattern = Pattern.compile("\\(([^)]+)\\)");//Pattern для поиска подстрок в скобках
+//        Matcher matcher = pattern.matcher(userAgentString);
+//        int i = 1;
+//        while (matcher.find()) {
+//            substringsInBrackets.add(matcher.group(i));
+//
+//        for (String substring : substringsInBrackets) {
+//            System.out.println("ASD!@!!  "+substring);
+//            if (substring.toLowerCase().contains("compatible")) {
+//                String[] parts = substring.split(";");
+//                if (parts.length >= 2) {
+//                    String fragment = parts[1].replace(" ", "");
+//                    botName = fragment.substring(0, fragment.indexOf("/"));
+//                }
+//            }
+//        }
+//
+//        i++;
+//        }
+
         return botName;
     }
 
@@ -172,8 +190,10 @@ public class LogEntry {
     }
 
     private static String extractOsType(String userAgentString) {
-        // Примерный паттерн для извлечения типа ОС
-        if (userAgentString.contains("Windows")) {
+        // Примерный паттерн для извлечения типа ОС  compatible
+        if (userAgentString.contains("compatible")) {
+            return "Windows";
+        } else if (userAgentString.contains("Windows")) {
             return "Windows";
         } else if (userAgentString.contains("Linux")) {
             return "Linux";

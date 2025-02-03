@@ -34,21 +34,22 @@ public class Main {
                     throw new LargeLenLineException("Строка " + countLines + " превышает 1024 символов!");
                 }
                 try {
-                    LogEntry entry = new LogEntry(line);
-                    System.out.println(entry.getUserAgent());
-                    stat.addEntry(entry);
+                    LogEntry logEntry = new LogEntry(line);
+//                    System.out.println(line);
+                    stat.addEntry(logEntry);
+//                    System.out.println(logEntry);
                 } catch (Exception ex) {
-                    //System.out.println(ex.getMessage());
+                    System.out.println(ex.getMessage());
                 }
                 countLines += 1;
                 line = reader.readLine();
-
             }
             reader.close();
         } catch (Exception ex) {
             System.out.println(ex.getMessage());
         }
         System.out.println(stat);
+        stat.printStatisticsOS();
     }
 
 
