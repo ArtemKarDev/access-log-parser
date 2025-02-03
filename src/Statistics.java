@@ -8,13 +8,18 @@ public class Statistics {
     LocalDateTime minTime;
     LocalDateTime maxTime;
     long countRequests;
-    HashSet<String> websitePages;
+    HashSet<String> websitePagesURL;
+    HashSet<String> websiteNoPagesURL;
     HashMap<String,Integer> visitorsOS;
+    HashMap<String,Integer> visitorsBrowser;
 
     public Statistics(){
-        this.websitePages = new HashSet<>();
+        this.websitePagesURL = new HashSet<>();
+        this.websiteNoPagesURL = new HashSet<>();
         this.visitorsOS = new HashMap<>();
+        this.visitorsBrowser = new HashMap<>();
     }
+
 
     public void addEntry(LogEntry logEntry){
         totalTraffic += logEntry.getBytesTransferred();
@@ -26,16 +31,29 @@ public class Statistics {
         if (maxTime == null || maxTime.isBefore(currentTime)){
             maxTime = currentTime;
         }
-        if (logEntry.getResponseCode() == 200) {
-            websitePages.add(logEntry.getRequestPath());
-        }
-        String os = logEntry.getUserAgent().osType;
 
+        int statusCode = logEntry.getResponseCode();
+        String url = logEntry.getRequestPath();
+        if (statusCode == 200) {
+            websitePagesURL.add(url);
+        } else if (statusCode == 404) {
+            websiteNoPagesURL.add(url);
+        }
+
+        String os = logEntry.getUserAgent().osType;
         if (visitorsOS.containsKey(os)){
             visitorsOS.put(os,visitorsOS.get(os)+1);
         } else {
             visitorsOS.put(os,1);
         }
+
+        String browser = logEntry.getUserAgent().browserName;
+        if (visitorsBrowser.containsKey(browser)){
+            visitorsBrowser.put(browser,visitorsBrowser.get(browser)+1);
+        } else {
+            visitorsBrowser.put(browser,1);
+        }
+
     }
 
     public HashMap<String, Double> getStatisticsVisitorsOs(){
@@ -45,12 +63,25 @@ public class Statistics {
             sumAllOS += value;
         }
         for (var entry : this.visitorsOS.entrySet()) {
-            //System.out.println("Ключ: " + entry.getKey() + ", Значение: " + entry.getValue());
             double precent = getPrecentage(entry.getValue(), sumAllOS);
             statOS.put(entry.getKey(),precent);
         }
         if (statOS == null){statOS.put("unknown", 1.0);}
     return statOS;
+    }
+
+    public HashMap<String, Double> getStatisticsVisitorsBrowser(){
+        HashMap<String, Double> statBrowser = new HashMap<>();
+        long sumAllBrowser = 0;
+        for (int value : this.visitorsBrowser.values()) {
+            sumAllBrowser += value;
+        }
+        for (var entry : this.visitorsBrowser.entrySet()) {
+            double precent = getPrecentage(entry.getValue(), sumAllBrowser);
+            statBrowser.put(entry.getKey(),precent);
+        }
+        if (statBrowser == null){statBrowser.put("unknown", 1.0);}
+        return statBrowser;
     }
 
     private LocalDateTime getMinTime(){
@@ -74,7 +105,10 @@ public class Statistics {
     }
 
     public HashSet<String> getWebsitePagesURL() {
-        return websitePages;
+        return websitePagesURL;
+    }
+    public HashSet<String> getWebsiteNoPagesURL() {
+        return websiteNoPagesURL;
     }
 
     public double getPrecentage(long score, long total){
@@ -86,11 +120,23 @@ public class Statistics {
         return "Средний трафик в час: " + getTrafficRateByte() + " байт. (" + (int)getTrafficRateByte()/1024/1024+ " Мбайт)";
     }
 
-    public void printStatisticsOS() {
+    public void printStatisticsUrl() {
         System.out.println("\nВсего уникальных URL-адресов: " + getWebsitePagesURL().size());
+        System.out.println("\nВсего запрошенных не существующих URL-адресов: " + getWebsiteNoPagesURL().size());
+    }
+
+    public void printStatisticsOS() {
         System.out.println("\nСтатистика по ОС:");
         for (String os : visitorsOS.keySet()) {
             System.out.println("OS: " + os + ", запросов: " + visitorsOS.get(os)+ ", доля : " + getStatisticsVisitorsOs().get(os));
         }
     }
+
+    public void printStatisticsBrowser() {
+        System.out.println("\nСтатистика по браузерам:");
+        for (String browser : visitorsBrowser.keySet()) {
+            System.out.println("Browser: " + browser + ", запросов: " + visitorsBrowser.get(browser)+ ", доля : " + getStatisticsVisitorsBrowser().get(browser));
+        }
+    }
+
 }

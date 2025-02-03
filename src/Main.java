@@ -49,7 +49,9 @@ public class Main {
             System.out.println(ex.getMessage());
         }
         System.out.println(stat);
+        stat.printStatisticsUrl();
         stat.printStatisticsOS();
+        stat.printStatisticsBrowser();
     }
 
 
