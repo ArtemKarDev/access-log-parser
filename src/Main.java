@@ -26,32 +26,73 @@ public class Main {
         FileReader fileReader = new FileReader(path);
         BufferedReader reader;
         Statistics stat = new Statistics();
+
+        int totalLines = countLines(path); // Подсчитываем общее количество строк
+
+        if (totalLines == 0) {
+            System.out.println("Файл пуст.");
+        } else {System.out.println("Строк в файле: " + totalLines);}
+
         try {
             reader = new BufferedReader(fileReader);
-            String line = reader.readLine();
-            while (line != null) {
+            String line;
+
+            while ((line = reader.readLine()) != null) {
                 if (line.length() > 1024) {
                     throw new LargeLenLineException("Строка " + countLines + " превышает 1024 символов!");
                 }
                 try {
                     LogEntry logEntry = new LogEntry(line);
-//                    System.out.println(line);
                     stat.addEntry(logEntry);
-//                    System.out.println(logEntry);
+
                 } catch (Exception ex) {
                     System.out.println(ex.getMessage());
                 }
-                countLines += 1;
-                line = reader.readLine();
+                updateProgressBar(countLines++, totalLines);
             }
             reader.close();
         } catch (Exception ex) {
-            System.out.println(ex.getMessage());
+            System.out.println("Ошибка чтения файла: " + ex.getMessage());
         }
+        updateProgressBar(countLines++, totalLines);
+        System.out.println("Вычитано строк: "+ countLines+"\n");
         System.out.println(stat);
         stat.printStatisticsUrl();
         stat.printStatisticsOS();
         stat.printStatisticsBrowser();
+    }
+
+    // Метод для подсчета общего количества строк в файле
+    private static int countLines(String filePath) {
+        int lines = 0;
+        try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
+            while (reader.readLine() != null) {
+                lines++;
+            }
+        } catch (IOException ignored) {
+        }
+        return lines;
+    }
+
+    // Метод для обновления ProgressBar
+    private static void updateProgressBar(int current, int total) {
+        int progress = (int) ((current * 100.0) / total);
+        StringBuilder bar = new StringBuilder("[");
+        int filled = progress / 5; // Ширина ProgressBar: 20 символов
+        for (int i = 0; i < 20; i++) {
+            if (i < filled) {
+                bar.append("=");
+            } else if (i == filled) {
+                bar.append(">");
+            } else {
+                bar.append(" ");
+            }
+        }
+        bar.append("] ").append(progress).append("%");
+        System.out.print("\r" + bar); // "\r" возвращает курсор в начало строки
+        if (current == total) {
+            System.out.println(); // Переход на новую строку после завершения
+        }
     }
 
 

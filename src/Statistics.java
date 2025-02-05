@@ -1,3 +1,4 @@
+import java.sql.SQLOutput;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.HashMap;
@@ -19,7 +20,6 @@ public class Statistics {
         this.visitorsOS = new HashMap<>();
         this.visitorsBrowser = new HashMap<>();
     }
-
 
     public void addEntry(LogEntry logEntry){
         totalTraffic += logEntry.getBytesTransferred();
@@ -55,33 +55,25 @@ public class Statistics {
         }
 
     }
-
-    public HashMap<String, Double> getStatisticsVisitorsOs(){
-        HashMap<String, Double> statOS = new HashMap<>();
-        long sumAllOS = 0;
-        for (int value : this.visitorsOS.values()) {
-            sumAllOS += value;
-        }
-        for (var entry : this.visitorsOS.entrySet()) {
-            double precent = getPrecentage(entry.getValue(), sumAllOS);
-            statOS.put(entry.getKey(),precent);
-        }
-        if (statOS == null){statOS.put("unknown", 1.0);}
-    return statOS;
+    public HashMap<String, Double> getStatisticsVisitorOs(){
+        return calculateStatistic(visitorsOS);
+    }
+    public HashMap<String, Double> getStatisticsVisitorBrowser(){
+        return calculateStatistic(visitorsBrowser);
     }
 
-    public HashMap<String, Double> getStatisticsVisitorsBrowser(){
-        HashMap<String, Double> statBrowser = new HashMap<>();
-        long sumAllBrowser = 0;
-        for (int value : this.visitorsBrowser.values()) {
-            sumAllBrowser += value;
+    private static HashMap<String, Double> calculateStatistic(HashMap<String,Integer> data){
+        HashMap<String,Double> statistics = new HashMap<>();
+        long totalVisitors = data.values().stream().mapToLong(Integer::intValue).sum();
+        if (totalVisitors == 0) {
+            statistics.put("unknown",1.0);
+            return statistics;
         }
-        for (var entry : this.visitorsBrowser.entrySet()) {
-            double precent = getPrecentage(entry.getValue(), sumAllBrowser);
-            statBrowser.put(entry.getKey(),precent);
+        for (var entry : data.entrySet()){
+            double percentage = getPercentage(entry.getValue() ,totalVisitors);
+            statistics.put(entry.getKey(), percentage);
         }
-        if (statBrowser == null){statBrowser.put("unknown", 1.0);}
-        return statBrowser;
+        return statistics;
     }
 
     private LocalDateTime getMinTime(){
@@ -111,7 +103,7 @@ public class Statistics {
         return websiteNoPagesURL;
     }
 
-    public double getPrecentage(long score, long total){
+    private static double getPercentage(long score, long total){
         return (double) (score * 100/ total);
     }
 
@@ -125,18 +117,16 @@ public class Statistics {
         System.out.println("\nВсего запрошенных не существующих URL-адресов: " + getWebsiteNoPagesURL().size());
     }
 
+    private static void printStatistics(HashMap<String,Double> statistics, String str) {
+        statistics.forEach((key, value) -> System.out.println(str + key + ", Доля: " + value));
+    }
+
     public void printStatisticsOS() {
-        System.out.println("\nСтатистика по ОС:");
-        for (String os : visitorsOS.keySet()) {
-            System.out.println("OS: " + os + ", запросов: " + visitorsOS.get(os)+ ", доля : " + getStatisticsVisitorsOs().get(os));
-        }
+        printStatistics(getStatisticsVisitorOs(),"Статистика по ОС: ");
     }
 
     public void printStatisticsBrowser() {
-        System.out.println("\nСтатистика по браузерам:");
-        for (String browser : visitorsBrowser.keySet()) {
-            System.out.println("Browser: " + browser + ", запросов: " + visitorsBrowser.get(browser)+ ", доля : " + getStatisticsVisitorsBrowser().get(browser));
-        }
+        printStatistics(getStatisticsVisitorBrowser(),"Статистика по браузеру: ");
     }
 
 }

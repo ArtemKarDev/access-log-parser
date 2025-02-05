@@ -1,8 +1,6 @@
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Locale;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -150,32 +148,6 @@ public class LogEntry {
                 } else {botName = fragment;}
             }
         }
-
-
-
-
-
-//        List<String> substringsInBrackets = new ArrayList<>();
-//        Pattern pattern = Pattern.compile("\\(([^)]+)\\)");//Pattern для поиска подстрок в скобках
-//        Matcher matcher = pattern.matcher(userAgentString);
-//        int i = 1;
-//        while (matcher.find()) {
-//            substringsInBrackets.add(matcher.group(i));
-//
-//        for (String substring : substringsInBrackets) {
-//            System.out.println("ASD!@!!  "+substring);
-//            if (substring.toLowerCase().contains("compatible")) {
-//                String[] parts = substring.split(";");
-//                if (parts.length >= 2) {
-//                    String fragment = parts[1].replace(" ", "");
-//                    botName = fragment.substring(0, fragment.indexOf("/"));
-//                }
-//            }
-//        }
-//
-//        i++;
-//        }
-
         return botName;
     }
 
