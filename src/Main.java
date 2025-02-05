@@ -5,9 +5,11 @@ public class Main {
     public static void main(String[] args) throws IOException, Exception {
 
         System.out.println("Введите путь к файлу и нажмите <Enter>: ");
-        // C:\aqa_inno\AccessLogParser\access.log C:\aqa_inno\AccessLogParser\5.log
-        String path = new Scanner(System.in).nextLine();
-        File file = new File(path);
+        // C:\aqa_inno\AccessLogParser\access.log     C:\aqa_inno\AccessLogParser\5.log
+        //String path = new Scanner(System.in).nextLine();
+        String path = "C:\\aqa_inno\\AccessLogParser\\access.log ";
+       // String path = "C:\\aqa_inno\\AccessLogParser\\5.log ";
+                File file = new File(path);
         boolean fileExists = file.exists();
         boolean isDirectory = file.isDirectory();
 
@@ -57,9 +59,11 @@ public class Main {
         updateProgressBar(countLines++, totalLines);
         System.out.println("Вычитано строк: "+ countLines+"\n");
         System.out.println(stat);
+        System.out.println("Посещений в час: "+ stat.avgVisitorsForHour());
         stat.printStatisticsUrl();
         stat.printStatisticsOS();
         stat.printStatisticsBrowser();
+
     }
 
     // Метод для подсчета общего количества строк в файле

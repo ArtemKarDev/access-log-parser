@@ -95,12 +95,13 @@ public class LogEntry {
         String osType;
         String browserName;
 
-        public UserAgent(String browserName, String osType) {
+        private UserAgent(String browserName, String osType) {
             this.browserName = browserName;
             this.osType = osType;
+            this.botName = "none";
         }
 
-        public UserAgent(String browserName, String osType, String botName) {
+        private UserAgent(String browserName, String osType, String botName) {
             this.browserName = browserName;
             this.osType = osType;
             this.botName = botName;
@@ -132,13 +133,13 @@ public class LogEntry {
             browserName = "compatible";
             botName = extractBotName(userAgentString);
         } else {
-            botName = null;
+            botName = "none";
         }
         return new UserAgent(browserName, osType, botName);
     }
 
     private static String extractBotName(String userAgentString) {
-        String botName = "unknown";
+        String botName = "none";
         String[] substrings = userAgentString.split(";");
         for (int i = 0; i<substrings.length-1; i++){
             if (substrings[i].contains("compatible") && i<substrings.length-1){
@@ -178,6 +179,12 @@ public class LogEntry {
         }
     }
 
+    public Boolean isBot(){
+        if (!getUserAgent().botName.equals("none")){
+            return  true;
+        }
+        return false;
+    }
 
     enum HttpMethod {
         GET,
