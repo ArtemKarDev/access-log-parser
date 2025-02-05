@@ -2,24 +2,26 @@ import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.function.Function;
 
 public class Statistics {
+    long countRequests;
     long totalTraffic;
+    long countUserAgentNotBot;
+    long countErrorRequest;
     LocalDateTime minTime;
     LocalDateTime maxTime;
-    long countRequests;
     HashSet<String> websitePagesURL;
     HashSet<String> websiteNoPagesURL;
     HashMap<String,Integer> visitorsOS;
     HashMap<String,Integer> visitorsBrowser;
-    long countUserAgentNotBot;
+    HashMap<String,Integer> visitorsIpNotBot;
 
     public Statistics(){
         this.websitePagesURL = new HashSet<>();
         this.websiteNoPagesURL = new HashSet<>();
         this.visitorsOS = new HashMap<>();
         this.visitorsBrowser = new HashMap<>();
+        this.visitorsIpNotBot = new HashMap<>();
     }
 
     public void addEntry(LogEntry logEntry){
@@ -41,23 +43,24 @@ public class Statistics {
             websiteNoPagesURL.add(url);
         }
 
-        String os = logEntry.getUserAgent().osType;
-        if (visitorsOS.containsKey(os)){
-            visitorsOS.put(os,visitorsOS.get(os)+1);
-        } else {
-            visitorsOS.put(os,1);
+        //countUserAgentNotBot += logEntry.isBot() ? 1 : 0;
+        if(!logEntry.isBot()){
+            countUserAgentNotBot += 1;
+            addItemInHashMap(visitorsIpNotBot,logEntry.getIpAddress());
         }
-        //countUserAgentNotBot =0;
-        countUserAgentNotBot += logEntry.getUserAgent().botName.equals("none") ? 1 : 0;
-
-        String browser = logEntry.getUserAgent().browserName;
-        if (visitorsBrowser.containsKey(browser)){
-            visitorsBrowser.put(browser,visitorsBrowser.get(browser)+1);
-        } else {
-            visitorsBrowser.put(browser,1);
-        }
-
+        countErrorRequest += logEntry.getResponseCode() >= 400 ? 1 : 0;
+        addItemInHashMap(visitorsOS,logEntry.getUserAgent().browserName);
+        addItemInHashMap(visitorsBrowser,logEntry.getUserAgent().getName());
     }
+
+    private void addItemInHashMap(HashMap<String,Integer> data, String item){
+        if (data.containsKey(item)){
+            data.put(item,data.get(item)+1);
+        } else {
+            data.put(item, 1);
+        }
+    }
+
     public HashMap<String, Double> getStatisticsVisitorOs(){
         return calculateStatistic(visitorsOS);
     }
@@ -91,18 +94,21 @@ public class Statistics {
     public long getCountRequests(){
         return countRequests;
     }
-    public double getTrafficRateByte(){
-        if (getMinTime() == null){return 0;}
-        Duration duration = Duration.between(getMinTime(),getMaxTime());
-        long durationInHours = duration.toHours();
-        if (durationInHours==0){durationInHours=1;}
-        return getTotalTraffic()/durationInHours;
+    public double getAvgAttendance(){
+        int totalCountVisitNotBot = visitorsIpNotBot.values().stream().reduce(0, Integer::sum);
+        return (double) (totalCountVisitNotBot/visitorsIpNotBot.size());
+    }
+    public double getTrafficRateBytePerHour(){
+        return getTotalTraffic()/getDuration();
+    }
+    public double avgErrorRequestPerHour(){
+        return (double) countErrorRequest/getDuration();
     }
 
-    public double avgVisitorsForHour(){
-        long duration = getDuration();
-        return (double) countUserAgentNotBot/duration;
+    public double avgVisitorsPerHour(){
+        return (double) countUserAgentNotBot/getDuration();
     }
+
     private Long getDuration(){
         if (getMinTime() == null){return 0L;}
         Duration duration = Duration.between(getMinTime(),getMaxTime());
@@ -123,12 +129,12 @@ public class Statistics {
 
     @Override
     public String toString(){           //TODO передалеть вывод статистики по трафику
-        return "Средний трафик в час: " + getTrafficRateByte() + " байт. (" + (int)getTrafficRateByte()/1024/1024+ " Мбайт)";
+        return "Средний трафик в час: " + getTrafficRateBytePerHour() + " байт. (" + (int) getTrafficRateBytePerHour()/1024/1024+ " Мбайт)";
     }
 
     public void printStatisticsUrl() {
         System.out.println("\nВсего уникальных URL-адресов: " + getWebsitePagesURL().size());
-        System.out.println("\nВсего запрошенных не существующих URL-адресов: " + getWebsiteNoPagesURL().size());
+        System.out.println("\nВсего запрошенных несуществующих URL-адресов: " + getWebsiteNoPagesURL().size());
     }
 
     private static void printStatistics(HashMap<String,Double> statistics, String str) {

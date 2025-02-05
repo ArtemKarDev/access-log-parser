@@ -6,9 +6,9 @@ public class Main {
 
         System.out.println("Введите путь к файлу и нажмите <Enter>: ");
         // C:\aqa_inno\AccessLogParser\access.log     C:\aqa_inno\AccessLogParser\5.log
-        //String path = new Scanner(System.in).nextLine();
-        String path = "C:\\aqa_inno\\AccessLogParser\\access.log ";
-       // String path = "C:\\aqa_inno\\AccessLogParser\\5.log ";
+        String path = new Scanner(System.in).nextLine();
+//        String path = "C:\\aqa_inno\\AccessLogParser\\access.log ";
+//        String path = "C:\\aqa_inno\\AccessLogParser\\5.log ";
                 File file = new File(path);
         boolean fileExists = file.exists();
         boolean isDirectory = file.isDirectory();
@@ -29,16 +29,16 @@ public class Main {
         BufferedReader reader;
         Statistics stat = new Statistics();
 
-        int totalLines = countLines(path); // Подсчитываем общее количество строк
+        int totalLines = countLines(path);
 
         if (totalLines == 0) {
             System.out.println("Файл пуст.");
+            return;
         } else {System.out.println("Строк в файле: " + totalLines);}
 
         try {
             reader = new BufferedReader(fileReader);
             String line;
-
             while ((line = reader.readLine()) != null) {
                 if (line.length() > 1024) {
                     throw new LargeLenLineException("Строка " + countLines + " превышает 1024 символов!");
@@ -56,10 +56,12 @@ public class Main {
         } catch (Exception ex) {
             System.out.println("Ошибка чтения файла: " + ex.getMessage());
         }
-        updateProgressBar(countLines++, totalLines);
+        updateProgressBar(countLines, totalLines);
         System.out.println("Вычитано строк: "+ countLines+"\n");
         System.out.println(stat);
-        System.out.println("Посещений в час: "+ stat.avgVisitorsForHour());
+        System.out.println("Посещений в час: "+ (int)stat.avgVisitorsPerHour());
+        System.out.println("Средняя посещаемость : "+ (int)stat.getAvgAttendance());
+        System.out.println("Ошибочных запросов в час: "+ (int)stat.avgErrorRequestPerHour());
         stat.printStatisticsUrl();
         stat.printStatisticsOS();
         stat.printStatisticsBrowser();

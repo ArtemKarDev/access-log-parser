@@ -40,7 +40,7 @@ public class LogEntry {
             String userAgentString = matcher.group(9);
             this.userAgent = parseUserAgent(userAgentString);
         } else {
-            this.userAgent = new UserAgent("none", "none");
+            this.userAgent = new UserAgent("none", "none", "none");
         }
     }
 
