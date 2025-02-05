@@ -1,7 +1,9 @@
-import java.time.Duration;
-import java.time.LocalDateTime;
+import java.time.*;
+import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
+import java.util.Optional;
 
 public class Statistics {
     long countRequests;
@@ -16,12 +18,15 @@ public class Statistics {
     HashMap<String,Integer> visitorsBrowser;
     HashMap<String,Integer> visitorsIpNotBot;
 
+    HashMap<Integer,Integer> visitsPerSeconds;
+
     public Statistics(){
         this.websitePagesURL = new HashSet<>();
         this.websiteNoPagesURL = new HashSet<>();
         this.visitorsOS = new HashMap<>();
         this.visitorsBrowser = new HashMap<>();
         this.visitorsIpNotBot = new HashMap<>();
+        this.visitsPerSeconds = new HashMap<>();
     }
 
     public void addEntry(LogEntry logEntry){
@@ -43,22 +48,22 @@ public class Statistics {
             websiteNoPagesURL.add(url);
         }
 
-        //countUserAgentNotBot += logEntry.isBot() ? 1 : 0;
         if(!logEntry.isBot()){
             countUserAgentNotBot += 1;
             addItemInHashMap(visitorsIpNotBot,logEntry.getIpAddress());
+            int seconds = (int) logEntry.getDateTime().toInstant(ZoneOffset.ofHours(3)).getEpochSecond();
+            addItemInHashMap(visitsPerSeconds, seconds);
         }
         countErrorRequest += logEntry.getResponseCode() >= 400 ? 1 : 0;
         addItemInHashMap(visitorsOS,logEntry.getUserAgent().browserName);
         addItemInHashMap(visitorsBrowser,logEntry.getUserAgent().getName());
     }
 
-    private void addItemInHashMap(HashMap<String,Integer> data, String item){
-        if (data.containsKey(item)){
-            data.put(item,data.get(item)+1);
-        } else {
-            data.put(item, 1);
-        }
+    private <K,V extends Number> void addItemInHashMap(HashMap<K,Integer> data, K increment){
+        data.put(increment, data.getOrDefault(increment,0)+1);
+    }
+    private void addItemInHashMap3(HashMap<String,Integer> data, String item){
+        data.put(item, data.getOrDefault(item,0)+1);
     }
 
     public HashMap<String, Double> getStatisticsVisitorOs(){
@@ -66,6 +71,10 @@ public class Statistics {
     }
     public HashMap<String, Double> getStatisticsVisitorBrowser(){
         return calculateStatistic(visitorsBrowser);
+    }
+    public String getSecondWithPeakVisitors(){
+        int secondWithMaxVisitors = visitsPerSeconds.entrySet().stream().max(Map.Entry.comparingByValue()).get().getKey();
+        return Instant.ofEpochSecond(secondWithMaxVisitors).atZone(ZoneId.of("Europe/Moscow")).format(DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm:ss"));
     }
 
     private static HashMap<String, Double> calculateStatistic(HashMap<String,Integer> data){
