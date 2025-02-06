@@ -1,13 +1,12 @@
 import java.io.*;
-import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) throws IOException, Exception {
 
         System.out.println("Введите путь к файлу и нажмите <Enter>: ");
         // C:\aqa_inno\AccessLogParser\access.log     C:\aqa_inno\AccessLogParser\5.log
-        String path = new Scanner(System.in).nextLine();
-//        String path = "C:\\aqa_inno\\AccessLogParser\\access.log ";
+//        String path = new Scanner(System.in).nextLine();
+        String path = "C:\\aqa_inno\\AccessLogParser\\access.log ";
 //        String path = "C:\\aqa_inno\\AccessLogParser\\5.log ";
                 File file = new File(path);
         boolean fileExists = file.exists();
@@ -29,7 +28,7 @@ public class Main {
         BufferedReader reader;
         Statistics stat = new Statistics();
 
-        int totalLines = countLines(path);
+        int totalLines = totalCountLines(path);
 
         if (totalLines == 0) {
             System.out.println("Файл пуст.");
@@ -46,9 +45,9 @@ public class Main {
                 try {
                     LogEntry logEntry = new LogEntry(line);
                     stat.addEntry(logEntry);
-
+                    //System.out.println(logEntry.getRefererDomain());
                 } catch (Exception ex) {
-                    System.out.println(ex.getMessage());
+                    System.out.println(" строка " +countLines+"  "+ line+" "+ex.getMessage());
                 }
                 updateProgressBar(countLines++, totalLines);
             }
@@ -62,15 +61,17 @@ public class Main {
         System.out.println("Посещений в час: "+ (int)stat.avgVisitorsPerHour());
         System.out.println("Максимальный пик посещений "+ stat.getSecondWithPeakVisitors());
         System.out.println("Средняя посещаемость : "+ (int)stat.getAvgAttendance());
+        System.out.println("Максимальная посещаемость одним пользователем: "+ stat.getMaxVisitsPerIp());
         System.out.println("Ошибочных запросов в час: "+ (int)stat.avgErrorRequestPerHour());
         stat.printStatisticsUrl();
+        stat.printRefersDomains();
         stat.printStatisticsOS();
         stat.printStatisticsBrowser();
 
     }
 
     // Метод для подсчета общего количества строк в файле
-    private static int countLines(String filePath) {
+    private static int totalCountLines(String filePath) {
         int lines = 0;
         try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
             while (reader.readLine() != null) {

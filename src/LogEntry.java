@@ -71,6 +71,22 @@ public class LogEntry {
     public String getReferer() {
         return referer;
     }
+    public String getRefererDomain() {
+        String domain = this.referer;
+        if (domain.length()<4){ //equals("-") ) {
+            return "-";
+        } else {
+            if (domain.contains("%3A")){ domain = domain.replace("%3A",":");}
+            if (domain.contains("%2F")){ domain = domain.replace("%2F","/");}
+            domain = domain.split("://")[1];
+            domain = domain.split("/")[0];
+            if (domain.startsWith("www.")) {
+                domain = domain.substring(4);
+            }
+            return domain;
+        }
+
+    }
 
     public UserAgent getUserAgent() {
         return userAgent;
@@ -85,6 +101,7 @@ public class LogEntry {
                 ", url='" + requestPath + '\'' +
                 ", statusCode=" + responseCode +
                 ", bytesSent=" + bytesTransferred +
+                ", refer=" + referer +
                 ", userAgent='" + userAgent + '\'' +
                 '}';
     }
@@ -122,7 +139,6 @@ public class LogEntry {
     }
 
     public UserAgent parseUserAgent(String userAgentString) {
-
         String botName;
         String browserName;
         String osType;

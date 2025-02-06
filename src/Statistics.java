@@ -3,7 +3,6 @@ import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
-import java.util.Optional;
 
 public class Statistics {
     long countRequests;
@@ -13,6 +12,7 @@ public class Statistics {
     LocalDateTime minTime;
     LocalDateTime maxTime;
     HashSet<String> websitePagesURL;
+    HashSet<String> refersDomains;
     HashSet<String> websiteNoPagesURL;
     HashMap<String,Integer> visitorsOS;
     HashMap<String,Integer> visitorsBrowser;
@@ -22,6 +22,7 @@ public class Statistics {
 
     public Statistics(){
         this.websitePagesURL = new HashSet<>();
+        this.refersDomains = new HashSet<>();
         this.websiteNoPagesURL = new HashSet<>();
         this.visitorsOS = new HashMap<>();
         this.visitorsBrowser = new HashMap<>();
@@ -47,6 +48,11 @@ public class Statistics {
         } else if (statusCode == 404) {
             websiteNoPagesURL.add(url);
         }
+        String domain = logEntry.getRefererDomain();
+        if (!domain.equals("-")) {
+            refersDomains.add(domain);
+        }
+
 
         if(!logEntry.isBot()){
             countUserAgentNotBot += 1;
@@ -75,6 +81,10 @@ public class Statistics {
     public String getSecondWithPeakVisitors(){
         int secondWithMaxVisitors = visitsPerSeconds.entrySet().stream().max(Map.Entry.comparingByValue()).get().getKey();
         return Instant.ofEpochSecond(secondWithMaxVisitors).atZone(ZoneId.of("Europe/Moscow")).format(DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm:ss"));
+    }
+    public String getMaxVisitsPerIp(){
+        String ip = visitorsIpNotBot.entrySet().stream().max(Map.Entry.comparingByValue()).get().getKey();
+        return visitorsIpNotBot.get(ip)+" пользователь с IP "+ ip;
     }
 
     private static HashMap<String, Double> calculateStatistic(HashMap<String,Integer> data){
@@ -131,6 +141,9 @@ public class Statistics {
     public HashSet<String> getWebsiteNoPagesURL() {
         return websiteNoPagesURL;
     }
+    public HashSet<String> getRefersDomains() {
+        return refersDomains;
+    }
 
     private static double getPercentage(long score, long total){
         return (double) (score * 100/ total);
@@ -144,8 +157,13 @@ public class Statistics {
     public void printStatisticsUrl() {
         System.out.println("\nВсего уникальных URL-адресов: " + getWebsitePagesURL().size());
         System.out.println("\nВсего запрошенных несуществующих URL-адресов: " + getWebsiteNoPagesURL().size());
+        System.out.println("\nВсего доменов рефералов: " + getRefersDomains().size());
     }
 
+    public void printRefersDomains(){
+        System.out.println("\nСписок доменов рефералов: ");
+        getRefersDomains().forEach(System.out::println);
+    }
     private static void printStatistics(HashMap<String,Double> statistics, String str) {
         statistics.forEach((key, value) -> System.out.println(str + key + ", Доля: " + value));
     }
