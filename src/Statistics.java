@@ -61,7 +61,7 @@ public class Statistics {
             addItemInHashMap(visitsPerSeconds, seconds);
         }
         countErrorRequest += logEntry.getResponseCode() >= 400 ? 1 : 0;
-        addItemInHashMap(visitorsOS,logEntry.getUserAgent().browserName);
+        addItemInHashMap(visitorsOS,logEntry.getUserAgent().osType);
         addItemInHashMap(visitorsBrowser,logEntry.getUserAgent().getName());
     }
 
@@ -89,7 +89,7 @@ public class Statistics {
 
     private static HashMap<String, Double> calculateStatistic(HashMap<String,Integer> data){
         HashMap<String,Double> statistics = new HashMap<>();
-        long totalVisitors = data.values().stream().mapToLong(Integer::intValue).sum();
+        double totalVisitors = data.values().stream().mapToLong(Integer::intValue).sum();
         if (totalVisitors == 0) {
             statistics.put("unknown",1.0);
             return statistics;
@@ -145,7 +145,7 @@ public class Statistics {
         return refersDomains;
     }
 
-    private static double getPercentage(long score, long total){
+    private static double getPercentage(long score, double total){
         return (double) (score * 100/ total);
     }
 
