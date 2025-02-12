@@ -78,8 +78,11 @@ public class Statistics {
         return calculateStatistic(visitorsBrowser);
     }
     public String getSecondWithPeakVisitors(){
-        int secondWithMaxVisitors = visitsPerSeconds.entrySet().stream().max(Map.Entry.comparingByValue()).get().getKey();
-        return Instant.ofEpochSecond(secondWithMaxVisitors).atZone(ZoneId.of("Europe/Moscow")).format(DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm:ss"));
+        int timestampSecond = visitsPerSeconds.entrySet().stream().max(Map.Entry.comparingByValue()).get().getKey();
+        return Instant.ofEpochSecond(timestampSecond).atZone(ZoneId.of("Europe/Moscow")).format(DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm:ss"));
+    }
+    public int getMaxVisitsPerSecond(){
+        return visitsPerSeconds.entrySet().stream().max(Map.Entry.comparingByValue()).get().getValue();
     }
     public String getMaxVisitsPerIp(){
         String ip = visitorsIpNotBot.entrySet().stream().max(Map.Entry.comparingByValue()).get().getKey();

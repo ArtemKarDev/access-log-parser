@@ -59,7 +59,7 @@ public class Main {
         System.out.println("Вычитано строк: "+ countLines+"\n");
         System.out.println(stat);
         System.out.println("Посещений в час: "+ (int)stat.avgVisitorsPerHour());
-        System.out.println("Максимальный пик посещений "+ stat.getSecondWithPeakVisitors());
+        System.out.println("Максимальный пик посещений "+ stat.getSecondWithPeakVisitors()+" с количеством: "+stat.getMaxVisitsPerSecond());
         System.out.println("Средняя посещаемость : "+ (int)stat.getAvgAttendance());
         System.out.println("Максимальная посещаемость одним пользователем: "+ stat.getMaxVisitsPerIp());
         System.out.println("Ошибочных запросов в час: "+ (int)stat.avgErrorRequestPerHour());
