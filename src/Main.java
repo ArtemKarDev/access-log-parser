@@ -6,7 +6,7 @@ public class Main {
         System.out.println("Введите путь к файлу и нажмите <Enter>: ");
         // C:\aqa_inno\AccessLogParser\access.log     C:\aqa_inno\AccessLogParser\5.log
 //        String path = new Scanner(System.in).nextLine();
-        String path = "C:\\aqa_inno\\AccessLogParser\\access.log ";
+        String path = "C:\\aqa_inno\\AccessLogParser\\access.log";
 //        String path = "C:\\aqa_inno\\AccessLogParser\\5.log ";
                 File file = new File(path);
         boolean fileExists = file.exists();

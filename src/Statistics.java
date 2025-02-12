@@ -53,7 +53,6 @@ public class Statistics {
             refersDomains.add(domain);
         }
 
-
         if(!logEntry.isBot()){
             countUserAgentNotBot += 1;
             addItemInHashMap(visitorsIpNotBot,logEntry.getIpAddress());
@@ -114,7 +113,7 @@ public class Statistics {
         return countRequests;
     }
     public double getAvgAttendance(){
-        int totalCountVisitNotBot = visitorsIpNotBot.values().stream().reduce(0, Integer::sum);
+        int totalCountVisitNotBot = visitorsIpNotBot.values().stream().mapToInt(Integer::intValue).sum();
         return (double) (totalCountVisitNotBot/visitorsIpNotBot.size());
     }
     public double getTrafficRateBytePerHour(){
